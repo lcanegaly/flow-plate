@@ -20,18 +20,16 @@ double orificeFlow::KGsToM3s(double massFlowKGs, double airDensityKgM3)
     return massFlowKGs / airDensityKgM3; 
 }
 
-//ISO 5167 Orifice plate flow Eq
 double orificeFlow::OrificeMassFlowKGs(double coefficientOfDischarge, double orificeRatio, 
     double expansibility, double orificeDiamterM, double fluidDensityKgM3, double deltaPa)
 {
-    double massFlowRateKgS = (coefficientOfDischarge / sqrt(1 - pow(orificeRatio, 4))) 
+    return (coefficientOfDischarge / sqrt(1 - pow(orificeRatio, 4))) 
         * (expansibility * (M_PI / 4) * pow(orificeDiamterM, 2)) * sqrt(2 * deltaPa * fluidDensityKgM3);
-    
-    return massFlowRateKgS;
 }
 
 double orificeFlow::AirPressureKPa(double elevation)
 {
+    //ToDo calculate atmospheric pressure from elevation
     return 101.325;
 }
 
@@ -42,7 +40,6 @@ double orificeFlow::AirDensityKgM3(double tempCelcius, double atmosphericPressur
     return 1.2041;
 }
 
-//Convenience function for imperial units, with the exception of Pascal.
 double orificeFlow::OrificeFlowCfm(double elevationFt, double orificeDiameterInch, double airTempF, double deltaPa, double coefficient)
 {
     double airDensity = AirDensityKgM3( FToC(airTempF), AirPressureKPa(0) );

@@ -15,7 +15,8 @@ constexpr double orificeToPipeRatio = 0.001;
 //ISO 5167 Orifice plate flow Equation.
 double OrificeMassFlowKGs(double coefficientOfDischarge, double orificeRatio, 
     double expansibility, double orificeDiamterM, double fluidDensityKgM3, double deltaPa);
-//More convienient version of Orifice flow function for imperial units, convert mass float to volume flow.
+
+//More convenient version of Orifice flow function for imperial units, converts mass flow to volume flow.
 double OrificeFlowCfm(double elevationFt, double orificeDiameterInch, double airTempF, double deltaPa, double coefficient);
 
 double InchToMeter(double inch);
