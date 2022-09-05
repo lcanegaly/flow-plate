@@ -27,15 +27,6 @@ double AirPressureKPa(double elevation);
 double AirDensityKgM3(double tempCelcius, double atmosphericPressureKPa);
 
 //ISO 5167 Expansibility calc
-static constexpr double Expansibility()
-{
-    //ϵ= 1 − (0.351 + 0.256β^4 + 0.93β^8)⋅[1−(pout/pin)^1/κ]
-    //β = narrowing ratio of pipe to orifice
-    //κ = heat capacity ratio = using estimated val of 1.3
-    //pin intake pressure, pout discharge pressure (50pa used as constant)
-    const double pin = 101350;
-    const double pout = 101300;
-    return 1 - (0.351 + 0.256 * pow(orificeToPipeRatio, 4) + 0.93 * pow(orificeToPipeRatio, 8) * (1 - pow((pout/pin), (1/1.3)) ));
-};
+double Expansibility();
 
 }

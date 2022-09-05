@@ -1,11 +1,8 @@
 cmake_minimum_required(VERSION 3.0.0)
-project(flow VERSION 0.1.0)
+project(flowplate VERSION 0.1.1)
 
-include(CTest)
-enable_testing()
 
-add_executable(flow main.cpp orificeflow.cpp)
+SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
 
-set(CPACK_PROJECT_NAME ${PROJECT_NAME})
-set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
-include(CPack)
+ADD_LIBRARY(flowplate STATIC orificeflow.cpp)
+
