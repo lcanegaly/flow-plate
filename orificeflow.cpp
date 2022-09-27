@@ -17,9 +17,10 @@ double orifice_flow::KGsToM3s(double mass_flow_kg_s, double air_density_kg_m3) {
 double orifice_flow::OrificeMassFlowKGs(
     double coefficient_of_discharge, double orifice_ratio, double expansibility,
     double orifice_diamter_m, double fluid_density_kg_m3, double delta_pa) {
-  return (coefficient_of_discharge / sqrt(1 - pow(orifice_ratio, 4))) *
-         (expansibility * (M_PI / 4) * pow(orifice_diamter_m, 2)) *
-         sqrt(2 * delta_pa * fluid_density_kg_m3);
+  double flowKg = (coefficient_of_discharge / sqrt(1 - pow(orifice_ratio, 4))) *
+                  (expansibility * (M_PI / 4) * pow(orifice_diamter_m, 2)) *
+                  sqrt(2 * delta_pa * fluid_density_kg_m3);
+  return flowKg;
 }
 
 double orifice_flow::AirPressureKPa(double elevation) {
@@ -38,13 +39,19 @@ double orifice_flow::OrificeFlowCfm(double elevation_ft,
                                     double orifice_diameter_inch,
                                     double air_temp_f, double delta_pa,
                                     double coefficient) {
+  bool neg = false;
+  if (delta_pa < 0) {
+    delta_pa *= -1.0;
+    neg = true;
+  }
   double air_density = AirDensityKgM3(FToC(air_temp_f), AirPressureKPa(0));
 
   double flow_kg_s = OrificeMassFlowKGs(
       coefficient, orifice_to_pipe_ratio, Expansibility(),
       InchToMeter(orifice_diameter_inch), air_density, delta_pa);
 
-  return M3sToCfm(KGsToM3s(flow_kg_s, air_density));
+  double flow = M3sToCfm(KGsToM3s(flow_kg_s, air_density));
+  return (neg) ? flow * -1.0 : flow;
 }
 
 // ISO 5167 Expansibility calc
